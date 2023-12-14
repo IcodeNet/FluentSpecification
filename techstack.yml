@@ -1,7 +1,7 @@
 repo_name: IcodeNet/FluentSpecification
-report_id: 39a9a597bb29c14713bc840a79770d04
+report_id: '059368828b875ba96978cc5b35656489'
 repo_type: Public
-timestamp: '2023-12-01T09:28:24+00:00'
+timestamp: '2023-12-14T13:26:56+00:00'
 requested_by: IcodeNet
 provider: github
 branch: master
@@ -17,7 +17,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/6755/2c45151a4a11d3a3c8e71bb34dd069d6_400x400.png
-  detection_source_url: github.com/IcodeNet/FluentSpecification/blob/master/FluentSpecification.Samples/FluentSpecification.Samples.csproj
+  detection_source_url: https://github.com/IcodeNet/FluentSpecification/blob/master/FluentSpecification.Samples/FluentSpecification.Samples.csproj
   detection_source: FluentSpecification.Samples/FluentSpecification.Samples.csproj
   last_updated_by: Byron Thanopoulos
   last_updated_on: 2015-09-12 18:05:01.000000000 Z
@@ -42,7 +42,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/1014/IoPy1dce_400x400.png
-  detection_source_url: github.com/IcodeNet/FluentSpecification/blob/master/FluentSpecification.Samples/FluentSpecification.Samples.csproj
+  detection_source_url: https://github.com/IcodeNet/FluentSpecification/blob/master/FluentSpecification.Samples/FluentSpecification.Samples.csproj
   detection_source: FluentSpecification.Samples/FluentSpecification.Samples.csproj
   last_updated_by: Byron Thanopoulos
   last_updated_on: 2015-09-12 18:05:01.000000000 Z
