@@ -1,7 +1,8 @@
 repo_name: IcodeNet/FluentSpecification
-report_id: '059368828b875ba96978cc5b35656489'
+report_id: 39a9a597bb29c14713bc840a79770d04
+version: 0.1
 repo_type: Public
-timestamp: '2023-12-14T13:26:56+00:00'
+timestamp: '2024-01-05T08:29:21+00:00'
 requested_by: IcodeNet
 provider: github
 branch: master
@@ -30,6 +31,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1015/1200px-C_Sharp_wordmark.svg.png
+  detection_source_url: https://github.com/IcodeNet/FluentSpecification
   detection_source: Repo Metadata
 - name: ".NET"
   description: A free, cross-platform, open source developer platform for building
@@ -54,6 +56,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/IcodeNet/FluentSpecification
   detection_source: Repo Metadata
 - name: Visual Studio
   description: State-of-the-art tools and services that you can use to create great
@@ -64,6 +67,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Integrated Development Environment
   image_url: https://img.stackshare.io/service/1451/SR2hUhQN.png
+  detection_source_url: https://github.com/IcodeNet/FluentSpecification/blob/master/FluentSpecification.sln
   detection_source: FluentSpecification.sln
   last_updated_by: Byron Thanopoulos
   last_updated_on: 2015-09-12 18:05:01.000000000 Z
