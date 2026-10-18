@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentSpecification
 {
-
-
+    /// <summary>
+    /// Satisfied only by items that satisfy both of two specifications. Create it with <see cref="CompositeSpecification{T}.And"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of item the rule applies to.</typeparam>
     public class AndSpecification<T> : CompositeSpecification<T>
     {
-        private SpecificationBase<T> one;
-        private SpecificationBase<T> two;
+        private readonly SpecificationBase<T> one;
+        private readonly SpecificationBase<T> two;
 
+        /// <summary>
+        /// Creates a specification from two rules that must both be satisfied.
+        /// </summary>
+        /// <param name="x">The first rule.</param>
+        /// <param name="y">The second rule.</param>
         public AndSpecification(SpecificationBase<T> x, SpecificationBase<T> y)
         {
             one = x;
             two = y;
         }
 
-
+        /// <inheritdoc />
         public override IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates)
         {
-            return (one.SatisfyingElementsFrom(candidates)).Intersect(two.SatisfyingElementsFrom(candidates));
-
+            return one.SatisfyingElementsFrom(candidates).Intersect(two.SatisfyingElementsFrom(candidates));
         }
-
     }
-
-
 }

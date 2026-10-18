@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="240" viewBox="-20 -20 940 240" role="img" aria-label="FluentSpecification">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e3a8a"/>
+      <stop offset="1" stop-color="#6d28d9"/>
+    </linearGradient>
+    <clipPath id="left"><circle cx="82" cy="100" r="48"/></clipPath>
+  </defs>
+  <rect x="-20" y="-20" width="940" height="240" fill="#ffffff"/>
+  <g transform="translate(0 0)">
+    <rect x="0" y="0" width="200" height="200" rx="44" fill="url(#bg)"/>
+    <circle cx="82" cy="100" r="48" fill="#fff" fill-opacity="0.18" stroke="#fff" stroke-width="6"/>
+    <circle cx="122" cy="100" r="48" fill="#fff" fill-opacity="0.18" stroke="#fff" stroke-width="6"/>
+    <circle cx="122" cy="100" r="48" fill="#34d399" clip-path="url(#left)"/>
+  </g>
+  <text x="232" y="98" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="60" font-weight="700" fill="#6d28d9">Fluent<tspan fill="#1e3a8a">Specification</tspan></text>
+  <text x="234" y="148" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#6b7280">Composable business rules for .NET</text>
+</svg>

@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentSpecification
 {
-
-    public class NotSpecification<T> : SpecificationBase<T>
+    /// <summary>
+    /// Satisfied by items that do not satisfy the wrapped specification. Create it with <see cref="CompositeSpecification{T}.Not"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of item the rule applies to.</typeparam>
+    public class NotSpecification<T> : CompositeSpecification<T>
     {
+        private readonly SpecificationBase<T> wrapped;
 
-        private SpecificationBase<T> wrapped;
-
+        /// <summary>
+        /// Creates a specification that reverses another rule.
+        /// </summary>
+        /// <param name="x">The rule to reverse.</param>
         public NotSpecification(SpecificationBase<T> x)
         {
             wrapped = x;
-
         }
 
-
+        /// <inheritdoc />
         public override IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates)
         {
-            return (candidates.Except(wrapped.SatisfyingElementsFrom(candidates)));
-
+            return candidates.Except(wrapped.SatisfyingElementsFrom(candidates));
         }
-
     }
-
-
 }
