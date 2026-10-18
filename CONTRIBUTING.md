@@ -24,4 +24,13 @@ dotnet run --project FluentSpecification.Samples
 
 1. Set `<Version>` in `FluentSpecification/FluentSpecification.csproj` and move the changelog entries under that version.
 2. Merge to `master`, then push a tag such as `v1.0.1`.
-3. The `release` workflow builds, tests and pushes the package to NuGet. It needs a `NUGET_API_KEY` repository secret.
+3. The `release` workflow builds, tests and pushes the package to NuGet using [Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing). GitHub proves the workflow's identity to nuget.org, which returns a one-hour API key. No long-lived key is stored.
+
+One-time setup on nuget.org (Trusted Publishing page, under your user menu):
+
+- Repository owner: `IcodeNet`
+- Repository: `FluentSpecification`
+- Workflow file: `release.yml`
+- Package glob: `IcodeNet.FluentSpecification*`, with the scope that allows pushing new packages and new versions
+
+Then add your nuget.org profile name (not your email) as the repository secret `NUGET_USER`.
