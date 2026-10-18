@@ -12,7 +12,7 @@
 
     <PackageId>IcodeNet.FluentSpecification</PackageId>
     <AssemblyName>FluentSpecification</AssemblyName>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Icode.net Ltd</Authors>
     <Company>Icode.net Ltd</Company>
     <Description>A lightweight implementation of the Specification pattern. Express business rules as reusable objects and combine them with And, Or and Not.</Description>
