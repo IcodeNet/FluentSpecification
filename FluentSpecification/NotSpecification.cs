@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace FluentSpecification
@@ -14,9 +15,16 @@ namespace FluentSpecification
         /// Creates a specification that reverses another rule.
         /// </summary>
         /// <param name="x">The rule to reverse.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="x"/> is <c>null</c>.</exception>
         public NotSpecification(SpecificationBase<T> x)
         {
-            wrapped = x;
+            wrapped = x ?? throw new ArgumentNullException(nameof(x));
+        }
+
+        /// <inheritdoc />
+        public override bool IsSatisfiedBy(T candidate)
+        {
+            return !wrapped.IsSatisfiedBy(candidate);
         }
 
         /// <inheritdoc />

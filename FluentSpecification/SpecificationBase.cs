@@ -13,7 +13,11 @@ namespace FluentSpecification
         /// </summary>
         /// <param name="candidate">The item to check.</param>
         /// <returns><c>true</c> if the item satisfies the rule; otherwise <c>false</c>.</returns>
-        public bool IsSatisfiedBy(T candidate)
+        /// <remarks>
+        /// The default implementation runs <see cref="SatisfyingElementsFrom"/> over a one-item set, which is slow when called in a loop.
+        /// The built-in specifications override it with a direct check.
+        /// </remarks>
+        public virtual bool IsSatisfiedBy(T candidate)
         {
             return SatisfyingElementsFrom((new[] { candidate }).AsQueryable()).Any();
         }
@@ -23,6 +27,7 @@ namespace FluentSpecification
         /// </summary>
         /// <param name="candidates">The items to filter.</param>
         /// <returns>The candidates that satisfy the rule.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="candidates"/> is <c>null</c>.</exception>
         public abstract IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates);
     }
 }

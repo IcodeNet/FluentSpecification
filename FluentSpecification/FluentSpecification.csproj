@@ -5,14 +5,18 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>FluentSpecification</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion>1.0.0</PackageValidationBaselineVersion>
 
     <PackageId>IcodeNet.FluentSpecification</PackageId>
     <AssemblyName>FluentSpecification</AssemblyName>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Icode.net Ltd</Authors>
     <Company>Icode.net Ltd</Company>
     <Description>A lightweight implementation of the Specification pattern. Express business rules as reusable objects and combine them with And, Or and Not.</Description>
-    <Copyright>Copyright Icode.net Ltd 2015</Copyright>
+    <Copyright>Copyright Icode.net Ltd 2015-2026</Copyright>
     <PackageTags>specification;specification-pattern;business-rules;linq;ddd;fluent</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>

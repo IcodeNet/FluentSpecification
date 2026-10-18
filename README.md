@@ -39,7 +39,8 @@ Instead of scattering `if` conditions and LINQ predicates across your codebase, 
 |---|---|
 | `SpecificationBase<T>` | Abstract base – implement `SatisfyingElementsFrom` to define your rule |
 | `CompositeSpecification<T>` | Extends `SpecificationBase<T>` with `And`, `Or`, and `Not` combinators |
-| `FunctionalSpecification<T>` | Ready-made specification built from a lambda – no subclass needed |
+| `FunctionalSpecification<T>` | Ready-made specification built from a lambda – no subclass needed. In-memory data only |
+| `ExpressionSpecification<T>` | Same, but built from an expression, so databases such as Entity Framework can run it as SQL |
 
 ## Quick Start
 
@@ -71,6 +72,8 @@ bool isValued = valuedCustomer.IsSatisfiedBy(customer); // false
 
 ### 3 – Filter a collection
 
+The `OverDueLoanSpecification` above works on in-memory data. See the database section below for rules that run as SQL.
+
 ```csharp
 var overdueSpec = new OverDueLoanSpecification();
 IQueryable<Loan> overdueLoans = overdueSpec.SatisfyingElementsFrom(loans.AsQueryable());
@@ -78,14 +81,23 @@ IQueryable<Loan> overdueLoans = overdueSpec.SatisfyingElementsFrom(loans.AsQuery
 
 ### 4 – Use a lambda instead of a class
 
-When the rule is simple enough that a dedicated class would be overkill, use `FunctionalSpecification<T>`:
+When the rule is simple enough that a dedicated class would be overkill, use `FunctionalSpecification<T>` (in-memory data) or `ExpressionSpecification<T>` (databases):
 
 ```csharp
 var bigLoanSpec = new FunctionalSpecification<Loan>(l => l.Amount > 10_000.00);
 IQueryable<Loan> bigLoans = bigLoanSpec.SatisfyingElementsFrom(loans.AsQueryable());
 ```
 
-### 5 – Combine specifications
+### 5 – Use a database
+
+For Entity Framework or any other query provider, use `ExpressionSpecification<T>`. The provider translates it to SQL:
+
+```csharp
+var bigLoans = new ExpressionSpecification<Loan>(l => l.Amount > 10_000);
+var rows = bigLoans.SatisfyingElementsFrom(db.Loans).ToList(); // WHERE Amount > 10000
+```
+
+### 6 – Combine specifications
 
 ![And, Or and Not shown as Venn diagrams](https://raw.githubusercontent.com/IcodeNet/FluentSpecification/master/docs/images/combinators.png)
 
@@ -139,10 +151,12 @@ var results = repo.FindElementsBy(overdueSpec.And(bigLoanSpec));
 Read this before you use the library with a database.
 
 - **Each rule filters a set.** `SatisfyingElementsFrom` takes an `IQueryable<T>` and returns the items that pass. `IsSatisfiedBy` checks one item by running the same rule over a one-item set.
-- **`And`, `Or` and `Not` use LINQ set operations** (`Intersect`, `Union` and `Except`). Items are compared with their default equality. A class without `Equals` and `GetHashCode` is compared by reference, so two different objects with the same data count as different items.
-- **The combinators remove duplicates.** A single rule keeps duplicates. A combined rule does not.
-- **`FunctionalSpecification<T>` takes a `Func<T, bool>`, not an expression.** Entity Framework and other query providers cannot translate it to SQL. They load the rows first and then filter in memory. For large tables, write a named specification with a LINQ expression inside `SatisfyingElementsFrom`, so the provider can translate the whole query.
-- **Null arguments are not checked.** Passing `null` to a combinator or constructor fails later, when the rule runs.
+- **`And`, `Or` and `Not` use LINQ set operations** (`Intersect`, `Union` and `Except`). **In memory**, items are compared with `Equals` and `GetHashCode`. A class without them is compared by reference, so two different objects with the same data count as different items. **On a database**, the provider compares whole rows (every selected column) and ignores `Equals`. The same specification can therefore return different results in memory and on a database.
+- **The combinators remove duplicates and do not keep order.** A single rule keeps duplicates. A combined rule does not. On a database the order of a combined result is not guaranteed, so add `OrderBy` when order matters.
+- **`IsSatisfiedBy` is fast for the built-in rules.** It checks one item directly. A custom rule that only overrides `SatisfyingElementsFrom` uses the slower default, which runs a query over a one-item set.
+- **Databases: use `ExpressionSpecification<T>`.** `FunctionalSpecification<T>` takes a `Func<T, bool>` (plain code), which Entity Framework and other query providers cannot translate to SQL. They throw `InvalidOperationException` when you read the query. `ExpressionSpecification<T>` takes an expression, so the provider turns it into SQL. A named specification also works, as long as every construct in its LINQ expression is one your provider can translate. For example, `DateTime.Add(TimeSpan)` in the `OverDueLoanSpecification` example above works in memory but Entity Framework cannot translate it. If you must use a `Func`, load the rows first with `ToList().AsQueryable()`. Note that `AsEnumerable().AsQueryable()` does not help.
+- **Combinators and databases.** `And`, `Or` and `Not` use `Intersect`, `Union` and `Except`. With Entity Framework on SQLite they run when every rule is an expression, and the tests cover this. Other providers may behave differently, so test yours.
+- **Null arguments fail fast.** Passing `null` to a constructor, a combinator or `SatisfyingElementsFrom` throws `ArgumentNullException` straight away.
 - **Thread safety.** Specifications hold no changing state. They are safe to share across threads if your own predicates are.
 
 ## API reference
@@ -156,14 +170,15 @@ Full XML documentation ships with the package, so your editor shows it as you ty
 | `CompositeSpecification<T>.And(other)` | Both rules must pass |
 | `CompositeSpecification<T>.Or(other)` | Either rule must pass |
 | `CompositeSpecification<T>.Not()` | The rule must not pass |
-| `FunctionalSpecification<T>(Func<T, bool>)` | A rule built from a lambda |
+| `FunctionalSpecification<T>(Func<T, bool>)` | A rule built from a lambda. In-memory data only |
+| `ExpressionSpecification<T>(Expression<Func<T, bool>>)` | A rule built from an expression. Works with Entity Framework |
 | `AndSpecification<T>`, `OrSpecification<T>`, `NotSpecification<T>` | What the combinators return. You rarely create them directly |
 
 ## Troubleshooting
 
 - **`SpecificationBase<T>` has no `And` method.** Only `CompositeSpecification<T>` has the combinators. Derive your rule from `CompositeSpecification<T>`, not from `SpecificationBase<T>`.
-- **Two equal-looking objects are treated as different.** Override `Equals` and `GetHashCode`, or use a `record`.
-- **A database query loads every row.** See the note on `FunctionalSpecification<T>` above.
+- **Two equal-looking objects are treated as different (in memory).** Override `Equals` and `GetHashCode`, or use a `record`. This has no effect on a database, which compares whole rows.
+- **`InvalidOperationException`: "The LINQ expression ... could not be translated".** You used `FunctionalSpecification<T>` on a database query. Switch to `ExpressionSpecification<T>`.
 
 ## Samples and tests
 
