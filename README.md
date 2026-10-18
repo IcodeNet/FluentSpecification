@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/IcodeNet/FluentSpecification/master/docs/images/logo.png" alt="FluentSpecification" width="520">
-</p>
+![FluentSpecification](https://raw.githubusercontent.com/IcodeNet/FluentSpecification/master/docs/images/logo.png)
 
 [![ci](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml/badge.svg)](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/IcodeNet.FluentSpecification.svg)](https://www.nuget.org/packages/IcodeNet.FluentSpecification)
