@@ -1,14 +1,22 @@
 # FluentSpecification
 
-A lightweight C# implementation of the **Specification pattern** that lets you encapsulate business rules as reusable, composable objects and combine them fluently with `And`, `Or`, and `Not`.
+[![ci](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml/badge.svg)](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml)
+[![NuGet](https://img.shields.io/nuget/v/FluentSpecification.svg)](https://www.nuget.org/packages/FluentSpecification)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
----
+A lightweight C# implementation of the **Specification pattern**. Express business rules as small, reusable, composable objects and combine them fluently with `And`, `Or` and `Not`.
+
+## Install
+
+```sh
+dotnet add package FluentSpecification
+```
+
+Supported platforms: the package targets **.NET Standard 2.0**. It runs on .NET Framework 4.6.1+, .NET Core 2.0+ and .NET 5+, on Windows, Linux and macOS. It has no dependencies.
 
 ## Why?
 
-Instead of scattering `if` conditions and LINQ predicates across your codebase, you express each rule as a named class (or a one-liner lambda). Rules stay decoupled from your domain objects and can be composed without touching either.
-
----
+Instead of scattering `if` conditions and LINQ predicates across your codebase, you express each rule as a named class (or a one-line lambda). Rules stay decoupled from your domain objects and can be combined without touching either.
 
 ## Core Classes
 
@@ -17,8 +25,6 @@ Instead of scattering `if` conditions and LINQ predicates across your codebase, 
 | `SpecificationBase<T>` | Abstract base – implement `SatisfyingElementsFrom` to define your rule |
 | `CompositeSpecification<T>` | Extends `SpecificationBase<T>` with `And`, `Or`, and `Not` combinators |
 | `FunctionalSpecification<T>` | Ready-made specification built from a lambda – no subclass needed |
-
----
 
 ## Quick Start
 
@@ -93,8 +99,6 @@ Combinators can be chained arbitrarily:
 var complex = overdueSpec.And(bigLoanSpec).And(sixDaysSpec.Not());
 ```
 
----
-
 ## Repository Integration
 
 Pass a specification into your repository to keep query logic out of your data layer:
@@ -113,18 +117,60 @@ public class LoanRepository
 var results = repo.FindElementsBy(overdueSpec.And(bigLoanSpec));
 ```
 
----
+## How it works, and what to watch for
 
-## Project Structure
+Read this before you use the library with a database.
+
+- **Each rule filters a set.** `SatisfyingElementsFrom` takes an `IQueryable<T>` and returns the items that pass. `IsSatisfiedBy` checks one item by running the same rule over a one-item set.
+- **`And`, `Or` and `Not` use LINQ set operations** (`Intersect`, `Union` and `Except`). Items are compared with their default equality. A class without `Equals` and `GetHashCode` is compared by reference, so two different objects with the same data count as different items.
+- **The combinators remove duplicates.** A single rule keeps duplicates. A combined rule does not.
+- **`FunctionalSpecification<T>` takes a `Func<T, bool>`, not an expression.** Entity Framework and other query providers cannot translate it to SQL. They load the rows first and then filter in memory. For large tables, write a named specification with a LINQ expression inside `SatisfyingElementsFrom`, so the provider can translate the whole query.
+- **Null arguments are not checked.** Passing `null` to a combinator or constructor fails later, when the rule runs.
+- **Thread safety.** Specifications hold no changing state. They are safe to share across threads if your own predicates are.
+
+## API reference
+
+Full XML documentation ships with the package, so your editor shows it as you type.
+
+| Member | Description |
+|---|---|
+| `SpecificationBase<T>.IsSatisfiedBy(T)` | Returns `true` when one item passes the rule |
+| `SpecificationBase<T>.SatisfyingElementsFrom(IQueryable<T>)` | Abstract. Returns the items that pass the rule |
+| `CompositeSpecification<T>.And(other)` | Both rules must pass |
+| `CompositeSpecification<T>.Or(other)` | Either rule must pass |
+| `CompositeSpecification<T>.Not()` | The rule must not pass |
+| `FunctionalSpecification<T>(Func<T, bool>)` | A rule built from a lambda |
+| `AndSpecification<T>`, `OrSpecification<T>`, `NotSpecification<T>` | What the combinators return. You rarely create them directly |
+
+## Troubleshooting
+
+- **`SpecificationBase<T>` has no `And` method.** Only `CompositeSpecification<T>` has the combinators. Derive your rule from `CompositeSpecification<T>`, not from `SpecificationBase<T>`.
+- **Two equal-looking objects are treated as different.** Override `Equals` and `GetHashCode`, or use a `record`.
+- **A database query loads every row.** See the note on `FunctionalSpecification<T>` above.
+
+## Samples and tests
+
+`FluentSpecification.Samples` is a runnable console example (loans and customers):
+
+```sh
+dotnet run --project FluentSpecification.Samples
+```
+
+`FluentSpecification.Tests` holds the unit tests:
+
+```sh
+dotnet test
+```
+
+## Contributing, security and licence
+
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md). Released under the [MIT licence](LICENSE).
+
+## Project structure
 
 ```
 FluentSpecification/
-├── FluentSpecification/          # Core library
-│   ├── SpecificationBase.cs
-│   ├── CompositeSpecification.cs
-│   ├── AndSpecification.cs
-│   ├── OrSpecification.cs
-│   ├── NotSpecification.cs
-│   └── FunctionalSpecification.cs
+├── FluentSpecification/          # The NuGet package (netstandard2.0)
+├── FluentSpecification.Tests/    # xUnit tests
 └── FluentSpecification.Samples/  # Runnable examples (Loan / Customer domain)
 ```
