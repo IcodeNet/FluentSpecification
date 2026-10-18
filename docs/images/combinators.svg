@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="300" viewBox="0 0 860 300" role="img" aria-label="And, Or and Not shown as Venn diagrams">
+  <style>
+    text{font-family:Segoe UI,Helvetica,Arial,sans-serif}
+    .t{font-size:24px;font-weight:700;fill:#1e3a8a;text-anchor:middle}
+    .c{font-size:16px;fill:#374151;text-anchor:middle;font-family:Consolas,Menlo,monospace}
+    .s{font-size:14px;fill:#6b7280;text-anchor:middle}
+    .o{fill:#e5e7eb;stroke:#6b7280;stroke-width:3}
+    .h{fill:#34d399}
+  </style>
+  <rect width="860" height="300" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <defs>
+    <clipPath id="a1"><circle cx="100" cy="130" r="55"/></clipPath>
+    <clipPath id="a2"><circle cx="430" cy="130" r="55"/></clipPath>
+    <clipPath id="a3"><circle cx="740" cy="130" r="55"/></clipPath>
+  </defs>
+  <!-- And -->
+  <text x="130" y="50" class="t">And</text>
+  <circle cx="100" cy="130" r="55" class="o"/><circle cx="160" cy="130" r="55" class="o"/>
+  <circle cx="160" cy="130" r="55" class="h" clip-path="url(#a1)"/>
+  <circle cx="100" cy="130" r="55" fill="none" stroke="#6b7280" stroke-width="3"/><circle cx="160" cy="130" r="55" fill="none" stroke="#6b7280" stroke-width="3"/>
+  <text x="130" y="230" class="c">a.And(b)</text>
+  <text x="130" y="256" class="s">in both  (Intersect)</text>
+  <!-- Or -->
+  <text x="460" y="50" class="t">Or</text>
+  <circle cx="430" cy="130" r="55" class="h"/><circle cx="490" cy="130" r="55" class="h"/>
+  <circle cx="430" cy="130" r="55" fill="none" stroke="#6b7280" stroke-width="3"/><circle cx="490" cy="130" r="55" fill="none" stroke="#6b7280" stroke-width="3"/>
+  <text x="460" y="230" class="c">a.Or(b)</text>
+  <text x="460" y="256" class="s">in either  (Union)</text>
+  <!-- Not -->
+  <text x="770" y="50" class="t">Not</text>
+  <circle cx="770" cy="130" r="55" class="h" opacity="0"/>
+  <rect x="690" y="70" width="160" height="120" rx="12" class="h"/>
+  <circle cx="770" cy="130" r="45" fill="#ffffff" stroke="#6b7280" stroke-width="3"/>
+  <text x="770" y="230" class="c">a.Not()</text>
+  <text x="770" y="256" class="s">not in a  (Except)</text>
+</svg>

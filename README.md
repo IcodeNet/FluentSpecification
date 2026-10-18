@@ -1,8 +1,13 @@
-# FluentSpecification
+<p align="center">
+  <img src="https://raw.githubusercontent.com/IcodeNet/FluentSpecification/master/docs/images/logo.png" alt="FluentSpecification" width="520">
+</p>
 
 [![ci](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml/badge.svg)](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/FluentSpecification.svg)](https://www.nuget.org/packages/FluentSpecification)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![NuGet downloads](https://img.shields.io/nuget/dt/FluentSpecification.svg)](https://www.nuget.org/packages/FluentSpecification)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/IcodeNet/FluentSpecification/blob/master/LICENSE)
+[![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-512bd4.svg)](https://learn.microsoft.com/dotnet/standard/net-standard)
+[![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](#install)
 
 A lightweight C# implementation of the **Specification pattern**. Express business rules as small, reusable, composable objects and combine them fluently with `And`, `Or` and `Not`.
 
@@ -17,6 +22,10 @@ Supported platforms: the package targets **.NET Standard 2.0**. It runs on .NET 
 ## Why?
 
 Instead of scattering `if` conditions and LINQ predicates across your codebase, you express each rule as a named class (or a one-line lambda). Rules stay decoupled from your domain objects and can be combined without touching either.
+
+## How it fits together
+
+![Candidates flow through a specification and come out as matches](https://raw.githubusercontent.com/IcodeNet/FluentSpecification/master/docs/images/flow.png)
 
 ## Core Classes
 
@@ -71,6 +80,8 @@ IQueryable<Loan> bigLoans = bigLoanSpec.SatisfyingElementsFrom(loans.AsQueryable
 ```
 
 ### 5 – Combine specifications
+
+![And, Or and Not shown as Venn diagrams](https://raw.githubusercontent.com/IcodeNet/FluentSpecification/master/docs/images/combinators.png)
 
 Specifications that extend `CompositeSpecification<T>` (including `FunctionalSpecification<T>`) expose `And`, `Or`, and `Not`:
 
@@ -164,7 +175,7 @@ dotnet test
 
 ## Contributing, security and licence
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and [CHANGELOG.md](CHANGELOG.md). Released under the [MIT licence](LICENSE).
+See [CONTRIBUTING.md](https://github.com/IcodeNet/FluentSpecification/blob/master/CONTRIBUTING.md), [SECURITY.md](https://github.com/IcodeNet/FluentSpecification/blob/master/SECURITY.md) and [CHANGELOG.md](https://github.com/IcodeNet/FluentSpecification/blob/master/CHANGELOG.md). Released under the [MIT licence](https://github.com/IcodeNet/FluentSpecification/blob/master/LICENSE).
 
 ## Project structure
 

@@ -15,6 +15,7 @@
     <PackageTags>specification;specification-pattern;business-rules;linq;ddd;fluent</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/IcodeNet/FluentSpecification</PackageProjectUrl>
     <RepositoryUrl>https://github.com/IcodeNet/FluentSpecification.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -31,6 +32,7 @@
 
   <ItemGroup>
     <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\docs\images\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
