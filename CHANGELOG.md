@@ -5,6 +5,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.1.1]
+
 ### Fixed
 - The README logo is a Markdown image, so it renders on nuget.org instead of showing raw HTML.
 
