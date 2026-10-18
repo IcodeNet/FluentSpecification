@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace FluentSpecification
@@ -16,10 +17,11 @@ namespace FluentSpecification
         /// </summary>
         /// <param name="x">The first rule.</param>
         /// <param name="y">The second rule.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="x"/> or <paramref name="y"/> is <c>null</c>.</exception>
         public AndSpecification(SpecificationBase<T> x, SpecificationBase<T> y)
         {
-            one = x;
-            two = y;
+            one = x ?? throw new ArgumentNullException(nameof(x));
+            two = y ?? throw new ArgumentNullException(nameof(y));
         }
 
         /// <inheritdoc />

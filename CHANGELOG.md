@@ -3,6 +3,21 @@
 All notable changes to this project are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.0]
+
+### Added
+- `ExpressionSpecification<T>`: a rule built from an expression tree. Entity Framework translates it to SQL. Tested against SQLite.
+- Nullable reference type annotations in the public API.
+- Package validation against 1.0.0, so a release cannot break the public API by accident.
+- The release workflow creates a GitHub Release with generated notes.
+
+### Changed
+- Constructors, `And`, `Or` and `SatisfyingElementsFrom` now throw `ArgumentNullException` for `null` arguments. Before, a `null` failed later with a `NullReferenceException` or silently built a broken rule.
+- `FunctionalSpecification<T>` no longer adds a redundant `Select`.
+
+### Fixed
+- The 1.0.0 documentation said database providers filter a `FunctionalSpecification<T>` in memory. They do not: they throw `InvalidOperationException`. The documentation now says so and points to `ExpressionSpecification<T>`.
+
 ## [1.0.0]
 
 First NuGet release. The package ID is `IcodeNet.FluentSpecification`; the namespace stays `FluentSpecification`.

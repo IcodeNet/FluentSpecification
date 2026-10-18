@@ -23,6 +23,7 @@ namespace FluentSpecification
         /// </summary>
         /// <param name="candidates">The items to filter.</param>
         /// <returns>The candidates that satisfy the rule.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="candidates"/> is <c>null</c>.</exception>
         public abstract IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates);
     }
 }

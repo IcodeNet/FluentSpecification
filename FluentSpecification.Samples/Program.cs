@@ -63,7 +63,6 @@ namespace FluentSpecification.Samples
             Console.WriteLine("Is Customer a valued customer ? " + spec.IsSatisfiedBy(byron));
 
 
-            Console.ReadLine();
         }
     }
 }

@@ -102,6 +102,15 @@ namespace FluentSpecification.Tests
             Assert.Equal(2, anyItem.And(anyItem).SatisfyingElementsFrom(items).Count());
         }
 
+        [Fact]
+        public void ExpressionSpecification_FiltersInMemory_WhenGivenALocalSet()
+        {
+            var even = new ExpressionSpecification<int>(n => n % 2 == 0);
+
+            Assert.Equal(new[] { 2, 4, 6 }, even.SatisfyingElementsFrom(Numbers.AsQueryable()).ToArray());
+            Assert.True(even.IsSatisfiedBy(4));
+        }
+
         private class Item
         {
             public int Id { get; set; }

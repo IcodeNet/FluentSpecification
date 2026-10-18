@@ -1,3 +1,5 @@
+using System;
+
 namespace FluentSpecification
 {
     /// <summary>
@@ -15,6 +17,7 @@ namespace FluentSpecification
         /// Types without value equality are compared by reference.
         /// </remarks>
         /// <param name="otherCandidate">The second rule.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="otherCandidate"/> is <c>null</c>.</exception>
         public CompositeSpecification<T> And(SpecificationBase<T> otherCandidate)
         {
             return new AndSpecification<T>(this, otherCandidate);
@@ -27,6 +30,7 @@ namespace FluentSpecification
         /// Implemented with <c>Union</c>, so items are compared with their default equality and the result has no duplicates.
         /// </remarks>
         /// <param name="otherCandidate">The second rule.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="otherCandidate"/> is <c>null</c>.</exception>
         public CompositeSpecification<T> Or(SpecificationBase<T> otherCandidate)
         {
             return new OrSpecification<T>(this, otherCandidate);
