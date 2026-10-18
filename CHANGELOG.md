@@ -5,7 +5,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [1.0.0]
 
-First NuGet release.
+First NuGet release. The package ID is `IcodeNet.FluentSpecification`; the namespace stays `FluentSpecification`.
 
 ### Added
 - Targets .NET Standard 2.0, so it runs on .NET Framework 4.6.1+, .NET Core and .NET 5+ on Windows, Linux and macOS.

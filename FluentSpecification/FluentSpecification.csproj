@@ -6,7 +6,8 @@
     <RootNamespace>FluentSpecification</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <PackageId>FluentSpecification</PackageId>
+    <PackageId>IcodeNet.FluentSpecification</PackageId>
+    <AssemblyName>FluentSpecification</AssemblyName>
     <Version>1.0.0</Version>
     <Authors>Icode.net Ltd</Authors>
     <Company>Icode.net Ltd</Company>

@@ -3,8 +3,8 @@
 </p>
 
 [![ci](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml/badge.svg)](https://github.com/IcodeNet/FluentSpecification/actions/workflows/ci.yml)
-[![NuGet](https://img.shields.io/nuget/v/FluentSpecification.svg)](https://www.nuget.org/packages/FluentSpecification)
-[![NuGet downloads](https://img.shields.io/nuget/dt/FluentSpecification.svg)](https://www.nuget.org/packages/FluentSpecification)
+[![NuGet](https://img.shields.io/nuget/v/IcodeNet.FluentSpecification.svg)](https://www.nuget.org/packages/IcodeNet.FluentSpecification)
+[![NuGet downloads](https://img.shields.io/nuget/dt/IcodeNet.FluentSpecification.svg)](https://www.nuget.org/packages/IcodeNet.FluentSpecification)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/IcodeNet/FluentSpecification/blob/master/LICENSE)
 [![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-512bd4.svg)](https://learn.microsoft.com/dotnet/standard/net-standard)
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](#install)
@@ -14,7 +14,13 @@ A lightweight C# implementation of the **Specification pattern**. Express busine
 ## Install
 
 ```sh
-dotnet add package FluentSpecification
+dotnet add package IcodeNet.FluentSpecification
+```
+
+The package ID is `IcodeNet.FluentSpecification`. In code, the namespace stays `FluentSpecification`:
+
+```csharp
+using FluentSpecification;
 ```
 
 Supported platforms: the package targets **.NET Standard 2.0**. It runs on .NET Framework 4.6.1+, .NET Core 2.0+ and .NET 5+, on Windows, Linux and macOS. It has no dependencies.
