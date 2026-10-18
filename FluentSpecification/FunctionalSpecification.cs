@@ -28,6 +28,12 @@ namespace FluentSpecification
         }
 
         /// <inheritdoc />
+        public override bool IsSatisfiedBy(T candidate)
+        {
+            return predicate(candidate);
+        }
+
+        /// <inheritdoc />
         public override IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates)
         {
             if (candidates == null) throw new ArgumentNullException(nameof(candidates));

@@ -25,6 +25,12 @@ namespace FluentSpecification
         }
 
         /// <inheritdoc />
+        public override bool IsSatisfiedBy(T candidate)
+        {
+            return one.IsSatisfiedBy(candidate) && two.IsSatisfiedBy(candidate);
+        }
+
+        /// <inheritdoc />
         public override IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates)
         {
             return one.SatisfyingElementsFrom(candidates).Intersect(two.SatisfyingElementsFrom(candidates));

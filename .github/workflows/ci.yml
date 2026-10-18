@@ -5,6 +5,9 @@ on:
     branches: [master]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     strategy:
@@ -19,4 +22,6 @@ jobs:
           dotnet-version: 10.0.x
       - run: dotnet build -c Release /warnaserror
       - run: dotnet test -c Release --no-build
+      - name: Pack (runs package validation against 1.0.0)
+        run: dotnet pack FluentSpecification -c Release --no-build -o out
       - run: dotnet run -c Release --no-build --project FluentSpecification.Samples

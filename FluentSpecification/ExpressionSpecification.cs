@@ -15,6 +15,7 @@ namespace FluentSpecification
     public class ExpressionSpecification<T> : CompositeSpecification<T>
     {
         private readonly Expression<Func<T, bool>> predicate;
+        private readonly Lazy<Func<T, bool>> compiled;
 
         /// <summary>
         /// Creates a specification from a rule written as an expression.
@@ -24,6 +25,13 @@ namespace FluentSpecification
         public ExpressionSpecification(Expression<Func<T, bool>> condition)
         {
             predicate = condition ?? throw new ArgumentNullException(nameof(condition));
+            compiled = new Lazy<Func<T, bool>>(predicate.Compile);
+        }
+
+        /// <inheritdoc />
+        public override bool IsSatisfiedBy(T candidate)
+        {
+            return compiled.Value(candidate);
         }
 
         /// <inheritdoc />

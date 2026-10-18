@@ -3,6 +3,8 @@
 All notable changes to this project are recorded here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
 ## [1.1.0]
 
 ### Added
@@ -12,10 +14,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - The release workflow creates a GitHub Release with generated notes.
 
 ### Changed
-- Constructors, `And`, `Or` and `SatisfyingElementsFrom` now throw `ArgumentNullException` for `null` arguments. Before, a `null` failed later with a `NullReferenceException` or silently built a broken rule.
+- `IsSatisfiedBy` is now `virtual`. The built-in specifications check one item directly instead of running a query, which is far faster in loops. Results are unchanged.
+- Constructors, `And`, `Or` (naming `otherCandidate`) and `SatisfyingElementsFrom` now throw `ArgumentNullException` for `null` arguments. Before, a `null` failed later with a `NullReferenceException` or silently built a broken rule.
 - `FunctionalSpecification<T>` no longer adds a redundant `Select`.
 
 ### Fixed
+- The 1.0.0 documentation also said combinators compare items by default equality on every provider; on a database they compare whole rows. The documentation now says so.
 - The 1.0.0 documentation said database providers filter a `FunctionalSpecification<T>` in memory. They do not: they throw `InvalidOperationException`. The documentation now says so and points to `ExpressionSpecification<T>`.
 
 ## [1.0.0]

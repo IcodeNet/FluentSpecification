@@ -22,6 +22,12 @@ namespace FluentSpecification
         }
 
         /// <inheritdoc />
+        public override bool IsSatisfiedBy(T candidate)
+        {
+            return !wrapped.IsSatisfiedBy(candidate);
+        }
+
+        /// <inheritdoc />
         public override IQueryable<T> SatisfyingElementsFrom(IQueryable<T> candidates)
         {
             return candidates.Except(wrapped.SatisfyingElementsFrom(candidates));

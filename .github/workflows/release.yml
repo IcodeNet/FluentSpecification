@@ -15,6 +15,13 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
+      - name: Tag must match the project version
+        run: |
+          project_version="$(dotnet msbuild FluentSpecification -getProperty:Version)"
+          if [ "${GITHUB_REF_NAME#v}" != "$project_version" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match <Version> $project_version in the csproj" >&2
+            exit 1
+          fi
       - run: dotnet build -c Release /warnaserror
       - run: dotnet test -c Release --no-build
       - run: dotnet pack FluentSpecification -c Release --no-build -o out
@@ -27,4 +34,4 @@ jobs:
       - name: GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${{ github.ref_name }}" out/*.nupkg out/*.snupkg --generate-notes --title "${{ github.ref_name }}"
+        run: gh release view "${{ github.ref_name }}" >/dev/null 2>&1 || gh release create "${{ github.ref_name }}" out/*.nupkg out/*.snupkg --generate-notes --title "${{ github.ref_name }}"

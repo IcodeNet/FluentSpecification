@@ -59,9 +59,31 @@ namespace FluentSpecification.Tests
             var big = new ExpressionSpecification<Loan>(l => l.Amount > 10);
             var firstTwo = new ExpressionSpecification<Loan>(l => l.Id < 3);
 
+            Assert.Contains("INTERSECT", big.And(firstTwo).SatisfyingElementsFrom(db.Loans).ToQueryString());
+            Assert.Contains("UNION", big.Or(firstTwo).SatisfyingElementsFrom(db.Loans).ToQueryString());
+            Assert.Contains("EXCEPT", big.Not().SatisfyingElementsFrom(db.Loans).ToQueryString());
             Assert.Equal(1, big.And(firstTwo).SatisfyingElementsFrom(db.Loans).Count());
             Assert.Equal(3, big.Or(firstTwo).SatisfyingElementsFrom(db.Loans).Count());
             Assert.Equal(1, big.Not().SatisfyingElementsFrom(db.Loans).Count());
+        }
+
+        [Fact]
+        public void Combinators_Throw_WhenAnExpressionRuleIsMixedWithAFunctionalRule()
+        {
+            var big = new ExpressionSpecification<Loan>(l => l.Amount > 10);
+            var functional = new FunctionalSpecification<Loan>(l => l.Id < 3);
+
+            Assert.Throws<InvalidOperationException>(() => big.And(functional).SatisfyingElementsFrom(db.Loans).ToList());
+        }
+
+        [Fact]
+        public void Combinators_CompareWholeRows_WhenRunOnADatabase()
+        {
+            db.Loans.Add(new Loan { Amount = 5 });
+            db.SaveChanges();
+            var fives = new ExpressionSpecification<Loan>(l => l.Amount == 5);
+
+            Assert.Equal(2, fives.Or(fives).SatisfyingElementsFrom(db.Loans).Count());
         }
 
         public class Loan

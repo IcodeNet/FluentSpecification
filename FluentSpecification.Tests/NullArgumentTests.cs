@@ -27,13 +27,17 @@ namespace FluentSpecification.Tests
         [Fact]
         public void And_Throws_WhenOtherRuleIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Any.And(null!));
+            var error = Assert.Throws<ArgumentNullException>(() => Any.And(null!));
+
+            Assert.Equal("otherCandidate", error.ParamName);
         }
 
         [Fact]
         public void Or_Throws_WhenOtherRuleIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Any.Or(null!));
+            var error = Assert.Throws<ArgumentNullException>(() => Any.Or(null!));
+
+            Assert.Equal("otherCandidate", error.ParamName);
         }
 
         [Fact]

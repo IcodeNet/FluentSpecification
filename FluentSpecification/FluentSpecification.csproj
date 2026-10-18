@@ -16,7 +16,7 @@
     <Authors>Icode.net Ltd</Authors>
     <Company>Icode.net Ltd</Company>
     <Description>A lightweight implementation of the Specification pattern. Express business rules as reusable objects and combine them with And, Or and Not.</Description>
-    <Copyright>Copyright Icode.net Ltd 2015</Copyright>
+    <Copyright>Copyright Icode.net Ltd 2015-2026</Copyright>
     <PackageTags>specification;specification-pattern;business-rules;linq;ddd;fluent</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
